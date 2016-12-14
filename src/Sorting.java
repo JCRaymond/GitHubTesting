@@ -5,17 +5,15 @@ import java.util.ArrayList;
  */
 public class Sorting {
 
-    public static <T extends Comparable<T>> ArrayList<T> bubblesort(ArrayList<T> list){
-        ArrayList<T> sorted = (ArrayList<T>) list.clone();
-        for (int i = sorted.size()-1; i>=0; i--){
+    public static <T extends Comparable<T>> void bubblesort(ArrayList<T> list){
+        for (int i = list.size()-1; i>=0; i--){
             for (int j=0; j<i; j++){
-                if (sorted.get(j).compareTo(sorted.get(j+1)) == 1){
-                    T temp = sorted.get(j);
-                    sorted.set(j, sorted.get(j+1));
-                    sorted.set(j+1, temp);
+                if ( list.get(j).compareTo( list.get(j+1)) == 1){
+                    T temp =  list.get(j);
+                     list.set(j,  list.get(j+1));
+                     list.set(j+1, temp);
                 }
             }
         }
-        return sorted;
     }
 }
