@@ -4,12 +4,17 @@ import java.util.Arrays;
 
 /**
  * Created by Jacob on 12/14/2016.
- * Class with a
+ * Class with a variety of sorting algorithms, cannot be instantiated
  */
 public class Sorting {
 
     private Sorting(){}
 
+    /**
+     * Uses the bubble sort algorithm to sort a generic ArrayList
+     * @param list the ArrayList to sort
+     * @param <T> the type of the objects in list
+     */
     public static <T extends Comparable<T>> void bubblesort(ArrayList<T> list){
         for (int i = list.size()-1; i>=0; i--){
             for (int j=0; j<i; j++){
@@ -22,6 +27,12 @@ public class Sorting {
         }
     }
 
+    /**
+     * Uses the bubble sort algorithm to sort a generic Array
+     * @param list the Array to sort
+     * @param <T> the type of the objects in list
+     * @return the sort list
+     */
     @SuppressWarnings("unchecked")
     public static <T extends Comparable<T>> T[] bubblesort(T[] list){
         if (list.length == 0){
