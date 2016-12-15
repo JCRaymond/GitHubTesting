@@ -34,12 +34,12 @@ public class Sorting {
      * @return the sort list
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Comparable<T>> T[] bubblesort(T[] list){
+    public static <T extends Comparable<T>> void bubblesort(T[] list){
         if (list.length == 0){
-            return list;
+            return;
         }
         ArrayList<T> arrayList = new ArrayList<>(Arrays.asList(list));
         bubblesort(arrayList);
-        return arrayList.toArray((T[])Array.newInstance(list[0].getClass(), list.length));
+        arrayList.toArray(list);
     }
 }
