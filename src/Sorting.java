@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,20 +7,22 @@ import java.util.Arrays;
  */
 public class Sorting {
 
-    private Sorting(){}
+    private Sorting() {
+    }
 
     /**
      * Uses the bubble sort algorithm to sort a generic ArrayList
+     *
      * @param list the ArrayList to sort
-     * @param <T> the type of the objects in list
+     * @param <T>  the type of the objects in list
      */
-    public static <T extends Comparable<T>> void bubblesort(ArrayList<T> list){
-        for (int i = list.size()-1; i>=0; i--){
-            for (int j=0; j<i; j++){
-                if ( list.get(j).compareTo( list.get(j+1)) == 1){
-                    T temp =  list.get(j);
-                     list.set(j,  list.get(j+1));
-                     list.set(j+1, temp);
+    public static <T extends Comparable<T>> void bubblesort(ArrayList<T> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (list.get(j).compareTo(list.get(j + 1)) == 1) {
+                    T temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
@@ -29,13 +30,13 @@ public class Sorting {
 
     /**
      * Uses the bubble sort algorithm to sort a generic Array
+     *
      * @param list the Array to sort
-     * @param <T> the type of the objects in list
-     * @return the sort list
+     * @param <T>  the type of the objects in list
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Comparable<T>> void bubblesort(T[] list){
-        if (list.length == 0){
+    public static <T extends Comparable<T>> void bubblesort(T[] list) {
+        if (list.length == 0) {
             return;
         }
         ArrayList<T> arrayList = new ArrayList<>(Arrays.asList(list));

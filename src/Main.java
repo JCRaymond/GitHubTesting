@@ -12,9 +12,9 @@ public class Main {
 //        System.out.println(nums);
 //        Sorting.bubblesort(nums);
 //        System.out.println(nums);
-        Double[] nums = new Double[]{3.,6.,2.,6.,9.,5.,6.,1.,0.,2.,.12,5.123};
+        Double[] nums = new Double[]{3., 6., 2., 6., 9., 5., 6., 1., 0., 2., .12, 5.123};
         Util.printar(nums);
-        nums = Sorting.bubblesort(nums);
+        Sorting.bubblesort(nums);
         Util.printar(nums);
     }
 }
