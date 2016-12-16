@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Integer> nums = new ArrayList<>(Arrays.asList(new Integer[]{3,6,2,6,9,5,6,1,0,2}));
         System.out.println(nums);
-        Sorting.mergesort(nums);
+        Sorting.quicksort(nums);
         System.out.println(nums);
 //        Double[] nums = new Double[]{3., 6., 2., 6., 9., 5., 6., 1., 0., 2., .12, 5.123};
 //        Util.printar(nums);
