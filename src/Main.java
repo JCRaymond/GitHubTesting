@@ -8,13 +8,13 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-//        ArrayList<Integer> nums = new ArrayList<>(Arrays.asList(new Integer[]{3,6,2,6,9,5,6,1,0,2}));
-//        System.out.println(nums);
-//        Sorting.quicksort(nums);
-//        System.out.println(nums);
-        Double[] nums = new Double[]{3., 6., 2., 6., 9., 5., 6., 1., 0., 2., .12, 5.123};
-        Util.printar(nums);
-        Sorting.quicksort(nums);
-        Util.printar(nums);
+        int size = 100000000;
+        ArrayList<Double> list = new ArrayList<>();
+        for (int i=0; i<size; i++){
+            list.add(Math.random()*size);
+        }
+        System.out.println(Sorting.isSorted(list));
+        Sorting.mergesort(list);
+        System.out.println(Sorting.isSorted(list));
     }
 }

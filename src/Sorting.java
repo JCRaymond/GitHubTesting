@@ -7,6 +7,20 @@ import java.util.Arrays;
  */
 public class Sorting {
 
+    public enum SortingType {
+        ASCENDING(-1), DESCENDING(1);
+
+        private final int val;
+
+        SortingType(int val) {
+            this.val = val;
+        }
+
+        public int getValue() {
+            return this.val;
+        }
+    }
+
     private Sorting() {
     }
 
@@ -19,7 +33,7 @@ public class Sorting {
      * @param p1   the position of the first object
      * @param p2   the position of the second object
      * @param <T>  the type of the objects in list
-     * @return     the list with the two values swapped (modifies original list)
+     * @return the list with the two values swapped (modifies original list)
      */
     private static <T extends Comparable<T>> ArrayList<T> swapif(ArrayList<T> list, int p1, int p2) {
         if (list.get(p1).compareTo(list.get(p2)) == 1) {
@@ -28,6 +42,57 @@ public class Sorting {
             list.set(p2, elem);
         }
         return list;
+    }
+
+    /**
+     * Determines whether or not the ArrayList is sorted in the specified way
+     *
+     * @param list the ArrayList to determine if sorted
+     * @param st   the way to check how the list is sorted
+     * @param <T>  the type of objects in list
+     * @return whether or not list is sort in the specified way
+     */
+    public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> list, SortingType st) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i).compareTo(list.get(i + 1)) == -st.getValue()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Determines whether or not the ArrayList is sorted in ascending order
+     *
+     * @param list the ArrayList to determine if sorted
+     * @param <T>  the type of objects in list
+     * @return whether or not list is sorted
+     */
+    public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> list) {
+        return isSorted(list, SortingType.ASCENDING);
+    }
+
+    /**
+     * Determines whether or not the Array is sorted in the specified way
+     *
+     * @param list the ArrayList to determine if sorted
+     * @param st   the way to check how the list is sorted
+     * @param <T>  the type of objects in list
+     * @return whether or not list is sort in the specified way
+     */
+    public static <T extends Comparable<T>> boolean isSorted(T[] list, SortingType st) {
+        return isSorted(new ArrayList<>(Arrays.asList(list)));
+    }
+
+    /**
+     * Determines whether or not the Array is sorted in ascending order
+     *
+     * @param list the ArrayList to determine if sorted
+     * @param <T>  the type of objects in list
+     * @return whether or not list is sorted
+     */
+    public static <T extends Comparable<T>> boolean isSorted(T[] list) {
+        return isSorted(list, SortingType.ASCENDING);
     }
 
     //endregion
@@ -39,12 +104,12 @@ public class Sorting {
      *
      * @param list the ArrayList to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> ArrayList<T> bubblesort(ArrayList<T> list) {
         for (int i = list.size() - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
-                swapif(list, j, j+1);
+                swapif(list, j, j + 1);
             }
         }
         return list;
@@ -55,7 +120,7 @@ public class Sorting {
      *
      * @param list the Array to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> T[] bubblesort(T[] list) {
         return bubblesort(new ArrayList<>(Arrays.asList(list))).toArray(list);
@@ -70,7 +135,7 @@ public class Sorting {
      *
      * @param list the ArrayList to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> ArrayList<T> insertsort(ArrayList<T> list) {
         for (int i = 1; i < list.size(); i++) {
@@ -90,7 +155,7 @@ public class Sorting {
      *
      * @param list the Array to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> T[] insertsort(T[] list) {
         return insertsort(new ArrayList<>(Arrays.asList(list))).toArray(list);
@@ -105,7 +170,7 @@ public class Sorting {
      *
      * @param list the ArrayList to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> ArrayList<T> selectsort(ArrayList<T> list) {
         for (int i = 0; i < list.size() - 1; i++) {
@@ -128,7 +193,7 @@ public class Sorting {
      *
      * @param list the Array to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> T[] selectsort(T[] list) {
         return selectsort(new ArrayList<>(Arrays.asList(list))).toArray(list);
@@ -141,15 +206,17 @@ public class Sorting {
     /**
      * merge function that merges two pre-sorted sublists in list
      *
+     * @deprecated use {@link #merge(ArrayList, int, int, int)}  instead, it is more space and time efficient
      * @param list the ArrayList which contains the two sublists
      * @param s    the (inclusive) start index of the first sublist
      * @param m    the (inclusive) end index of the first sublist
      *             (m+1) is the (inclusive) start of the second sublist
      * @param e    the (inclusive) end index of the second sublist
      * @param <T>  the type of the objects in the list
-     * @return     the list with the two sorted sublists merged (modifies original list)
+     * @return the list with the two sorted sublists merged (modifies original list)
      */
-    private static <T extends Comparable<T>> ArrayList<T> merge(ArrayList<T> list, int s, int m, int e) {
+    @Deprecated
+    private static <T extends Comparable<T>> ArrayList<T> oldmerge(ArrayList<T> list, int s, int m, int e) {
         ArrayList<T> subList1 = new ArrayList<>(list.subList(s, m + 1));
         ArrayList<T> subList2 = new ArrayList<>(list.subList(m + 1, e + 1));
         int s1 = 0;
@@ -167,8 +234,37 @@ public class Sorting {
         while (s1 < subList1.size()) {
             list.set(i++, subList1.get(s1++));
         }
-        while (s2 < subList2.size()) {
-            list.set(i++, subList2.get(s2++));
+        return list;
+    }
+
+    /**
+     * merge function that merges two pre-sorted sublists in list
+     *
+     * @param list the ArrayList which contains the two sublists
+     * @param s    the (inclusive) start index of the first sublist
+     * @param m    the (inclusive) end index of the first sublist
+     *             (m+1) is the (inclusive) start of the second sublist
+     * @param e    the (inclusive) end index of the second sublist
+     * @param <T>  the type of the objects in the list
+     * @return the list with the two sorted sublists merged (modifies original list)
+     */
+    private static <T extends Comparable<T>> ArrayList<T> merge(ArrayList<T> list, int s, int m, int e) {
+        ArrayList<T> subList1 = new ArrayList<>(list.subList(s, m+1));
+        int s1 = 0;
+        int s2 = m+1;
+        int i = s;
+        while (s1 < subList1.size() && s2 < e+1){
+            T elem;
+            if (subList1.get(s1).compareTo(list.get(s2)) == -1){
+                elem = subList1.get(s1++);
+            }
+            else{
+                elem = list.get(s2++);
+            }
+            list.set(i++, elem);
+        }
+        while (s1 < subList1.size()) {
+            list.set(i++, subList1.get(s1++));
         }
         return list;
     }
@@ -180,13 +276,13 @@ public class Sorting {
      * @param s    the (inclusive) start index of the sublist to mergesort
      * @param e    the (inclusive) end index of the sublist to mergesort
      * @param <T>  the type of the objects in the list
-     * @return     the sublist in list sorted (modifies original list)
+     * @return the sublist in list sorted (modifies original list)
      */
     private static <T extends Comparable<T>> ArrayList<T> mergesort(ArrayList<T> list, int s, int e) {
         if (s == e) {
             return list;
         }
-        if (e-s == 1) {
+        if (e - s == 1) {
             return swapif(list, s, e);
         }
         int m = (e - s) / 2 + s;
@@ -200,7 +296,7 @@ public class Sorting {
      *
      * @param list the ArrayList to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> ArrayList<T> mergesort(ArrayList<T> list) {
         return mergesort(list, 0, list.size() - 1);
@@ -211,7 +307,7 @@ public class Sorting {
      *
      * @param list the Array to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> T[] mergesort(T[] list) {
         return mergesort(new ArrayList<>(Arrays.asList(list))).toArray(list);
@@ -228,13 +324,13 @@ public class Sorting {
      * @param s    the (inclusive) start index of the sublist to quicksort
      * @param e    the (inclusive) end index of the sublist to quicksort
      * @param <T>  the type of objects in list
-     * @return     the sublist in list sorted (modifies original list)
+     * @return the sublist in list sorted (modifies original list)
      */
     private static <T extends Comparable<T>> ArrayList<T> quicksort(ArrayList<T> list, int s, int e) {
         if (s >= e) {
             return list;
         }
-        if (e-s == 1) {
+        if (e - s == 1) {
             return swapif(list, s, e);
         }
         T pivot = list.get(e);
@@ -244,7 +340,7 @@ public class Sorting {
             if (elem.compareTo(pivot) == 1) {
                 switchHiLo:
                 {
-                    for (int j = e-1; j > i; j--) {
+                    for (int j = e - 1; j > i; j--) {
                         if (list.get(j).compareTo(pivot) == -1) {
                             list.set(i, list.get(j));
                             list.set(j, elem);
@@ -268,7 +364,7 @@ public class Sorting {
      *
      * @param list the ArrayList to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> ArrayList<T> quicksort(ArrayList<T> list) {
         return quicksort(list, 0, list.size() - 1);
@@ -279,7 +375,7 @@ public class Sorting {
      *
      * @param list the Array to sort
      * @param <T>  the type of the objects in list
-     * @return     the sorted list (modifies original list)
+     * @return the sorted list (modifies original list)
      */
     public static <T extends Comparable<T>> T[] quicksort(T[] list) {
         return quicksort(new ArrayList<>(Arrays.asList(list))).toArray(list);
