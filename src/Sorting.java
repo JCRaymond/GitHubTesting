@@ -10,6 +10,8 @@ public class Sorting {
     private Sorting() {
     }
 
+    //region Bubble Sort
+
     /**
      * Uses the bubble sort algorithm to sort a generic ArrayList
      *
@@ -43,4 +45,31 @@ public class Sorting {
         bubblesort(arrayList);
         arrayList.toArray(list);
     }
+
+    //endregion
+
+    //region Insert Sort
+
+    /**
+     * Uses the insert sort algorithm to sort a generic ArrayList
+     *
+     * @param list the ArrayList to sort
+     * @param <T>  the type of the objects in list
+     */
+    public static <T extends Comparable<T>> void insertsort(ArrayList<T> list) {
+        for (int i = 1; i < list.size(); i++){
+            int newIndex = i-1;
+            while (list.get(newIndex).compareTo(list.get(i)) == 1 && newIndex>=0){
+                newIndex--;
+            }
+            T elem = list.get(i);
+            for (int j = i-1; j>newIndex; j--){
+                list.set(j+1, list.get(j));
+            }
+            list.set(newIndex, elem);
+            System.out.println(list);
+        }
+    }
+    //endregion
+
 }
