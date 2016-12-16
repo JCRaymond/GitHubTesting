@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import jcr.Sorting;
+import jcr.Sorting.SortingType;
 import java.util.Arrays;
 
 /**
@@ -8,13 +10,17 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        int size = 100000000;
+        int size = 1000000; //35000000 max on my machine for mergesort
         ArrayList<Double> list = new ArrayList<>();
         for (int i=0; i<size; i++){
             list.add(Math.random()*size);
         }
-        System.out.println(Sorting.isSorted(list));
-        Sorting.mergesort(list);
-        System.out.println(Sorting.isSorted(list));
+        System.out.println("list generated!");
+        boolean sorted = Sorting.isSorted(list);
+        System.out.println("list is sorted: " + sorted);
+        Sorting.sort(list, SortingType.QUICK);
+        System.out.println("list sorted!");
+        sorted = Sorting.isSorted(list);
+        System.out.println("list is sorted: " + sorted);
     }
 }

@@ -1,3 +1,5 @@
+package jcr;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,12 +9,20 @@ import java.util.Arrays;
  */
 public class Sorting {
 
-    public enum SortingType {
+    private Sorting() {
+    }
+
+    //region Enums
+
+    /**
+     * enum which allows to specify the sorting order
+     */
+    public enum SortingOrder {
         ASCENDING(-1), DESCENDING(1);
 
         private final int val;
 
-        SortingType(int val) {
+        SortingOrder(int val) {
             this.val = val;
         }
 
@@ -21,8 +31,12 @@ public class Sorting {
         }
     }
 
-    private Sorting() {
-    }
+    /**
+     * enum which allows to specify the sorting algorithm to use
+     */
+    public enum SortingType {BUBBLE, INSERT, SELECTION, MERGE, QUICK}
+
+    //endregion
 
     //region Utilties
 
@@ -48,13 +62,13 @@ public class Sorting {
      * Determines whether or not the ArrayList is sorted in the specified way
      *
      * @param list the ArrayList to determine if sorted
-     * @param st   the way to check how the list is sorted
+     * @param so   the way to check how the list is sorted
      * @param <T>  the type of objects in list
      * @return whether or not list is sort in the specified way
      */
-    public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> list, SortingType st) {
+    public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> list, SortingOrder so) {
         for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i).compareTo(list.get(i + 1)) == -st.getValue()) {
+            if (list.get(i).compareTo(list.get(i + 1)) == -so.getValue()) {
                 return false;
             }
         }
@@ -69,18 +83,18 @@ public class Sorting {
      * @return whether or not list is sorted
      */
     public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> list) {
-        return isSorted(list, SortingType.ASCENDING);
+        return isSorted(list, SortingOrder.ASCENDING);
     }
 
     /**
      * Determines whether or not the Array is sorted in the specified way
      *
      * @param list the ArrayList to determine if sorted
-     * @param st   the way to check how the list is sorted
+     * @param so   the way to check how the list is sorted
      * @param <T>  the type of objects in list
      * @return whether or not list is sort in the specified way
      */
-    public static <T extends Comparable<T>> boolean isSorted(T[] list, SortingType st) {
+    public static <T extends Comparable<T>> boolean isSorted(T[] list, SortingOrder so) {
         return isSorted(new ArrayList<>(Arrays.asList(list)));
     }
 
@@ -92,7 +106,40 @@ public class Sorting {
      * @return whether or not list is sorted
      */
     public static <T extends Comparable<T>> boolean isSorted(T[] list) {
-        return isSorted(list, SortingType.ASCENDING);
+        return isSorted(list, SortingOrder.ASCENDING);
+    }
+
+    //endregion
+
+    //region Sort
+
+    /**
+     * Generic sorting method with specified sorting algorithm
+     *
+     * @param list the ArrayList to sort
+     * @param st   the sorting algorithm to use
+     * @param <T>  the type of the Objects in list
+     * @return the sorted list (modifies original list)
+     */
+    public static <T extends Comparable<T>> ArrayList<T> sort(ArrayList<T> list, SortingType st){
+        switch (st){
+            case BUBBLE:
+                bubblesort(list);
+                break;
+            case INSERT:
+                insertsort(list);
+                break;
+            case SELECTION:
+                selectsort(list);
+                break;
+            case MERGE:
+                mergesort(list);
+                break;
+            case QUICK:
+                quicksort(list);
+                break;
+        }
+        return list;
     }
 
     //endregion
