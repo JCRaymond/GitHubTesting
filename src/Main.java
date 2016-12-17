@@ -10,17 +10,19 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        int size = 1000000; //35000000 max on my machine for mergesort
-        ArrayList<Double> list = new ArrayList<>();
+        int size = 50000000;
+        ArrayList<Integer> list = new ArrayList<>();
         for (int i=0; i<size; i++){
-            list.add(Math.random()*size);
+            list.add((int) (Math.random()*size));
         }
-        System.out.println("list generated!");
-        boolean sorted = Sorting.isSorted(list);
-        System.out.println("list is sorted: " + sorted);
+        System.out.println("List is sorted?");
+        System.out.println(Sorting.isSorted(list));
+        System.out.print("Sorting... ");
+        long s = System.currentTimeMillis();
         Sorting.sort(list, SortingType.QUICK);
-        System.out.println("list sorted!");
-        sorted = Sorting.isSorted(list);
-        System.out.println("list is sorted: " + sorted);
+        long e = System.currentTimeMillis();
+        System.out.println("(Took " + (e-s)/1000. + " seconds)");
+        System.out.println("List is sorted?");
+        System.out.println(Sorting.isSorted(list));
     }
 }

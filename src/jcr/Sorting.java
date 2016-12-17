@@ -34,7 +34,9 @@ public class Sorting {
     /**
      * enum which allows to specify the sorting algorithm to use
      */
-    public enum SortingType {BUBBLE, INSERT, SELECTION, MERGE, QUICK}
+    public enum SortingType {
+        BUBBLE, INSERT, SELECTION, MERGE, QUICK
+    }
 
     //endregion
 
@@ -121,8 +123,8 @@ public class Sorting {
      * @param <T>  the type of the Objects in list
      * @return the sorted list (modifies original list)
      */
-    public static <T extends Comparable<T>> ArrayList<T> sort(ArrayList<T> list, SortingType st){
-        switch (st){
+    public static <T extends Comparable<T>> ArrayList<T> sort(ArrayList<T> list, SortingType st) {
+        switch (st) {
             case BUBBLE:
                 bubblesort(list);
                 break;
@@ -253,7 +255,6 @@ public class Sorting {
     /**
      * merge function that merges two pre-sorted sublists in list
      *
-     * @deprecated use {@link #merge(ArrayList, int, int, int)}  instead, it is more space and time efficient
      * @param list the ArrayList which contains the two sublists
      * @param s    the (inclusive) start index of the first sublist
      * @param m    the (inclusive) end index of the first sublist
@@ -261,6 +262,7 @@ public class Sorting {
      * @param e    the (inclusive) end index of the second sublist
      * @param <T>  the type of the objects in the list
      * @return the list with the two sorted sublists merged (modifies original list)
+     * @deprecated use {@link #merge(ArrayList, int, int, int)}  instead, it is more space and time efficient
      */
     @Deprecated
     private static <T extends Comparable<T>> ArrayList<T> oldmerge(ArrayList<T> list, int s, int m, int e) {
@@ -296,16 +298,15 @@ public class Sorting {
      * @return the list with the two sorted sublists merged (modifies original list)
      */
     private static <T extends Comparable<T>> ArrayList<T> merge(ArrayList<T> list, int s, int m, int e) {
-        ArrayList<T> subList1 = new ArrayList<>(list.subList(s, m+1));
+        ArrayList<T> subList1 = new ArrayList<>(list.subList(s, m + 1));
         int s1 = 0;
-        int s2 = m+1;
+        int s2 = m + 1;
         int i = s;
-        while (s1 < subList1.size() && s2 < e+1){
+        while (s1 < subList1.size() && s2 < e + 1) {
             T elem;
-            if (subList1.get(s1).compareTo(list.get(s2)) == -1){
+            if (subList1.get(s1).compareTo(list.get(s2)) == -1) {
                 elem = subList1.get(s1++);
-            }
-            else{
+            } else {
                 elem = list.get(s2++);
             }
             list.set(i++, elem);
@@ -380,29 +381,33 @@ public class Sorting {
         if (e - s == 1) {
             return swapif(list, s, e);
         }
-        T pivot = list.get(e);
-        int pivInd = e;
-        for (int i = s; i < e; i++) {
-            T elem = list.get(i);
-            if (elem.compareTo(pivot) == 1) {
-                switchHiLo:
-                {
-                    for (int j = e - 1; j > i; j--) {
-                        if (list.get(j).compareTo(pivot) == -1) {
-                            list.set(i, list.get(j));
-                            list.set(j, elem);
-                            break switchHiLo;
-                        }
-                    }
-                    list.set(e, elem);
-                    list.set(i, pivot);
-                    pivInd = i;
-                    break;
-                }
+        int pivInd = (int) (Math.random() * (e - s) + s);
+        T pivot = list.get(pivInd);
+        list.set(pivInd, list.get(e));
+        list.set(e, pivot);
+        int lo = s;
+        int hi = e - 1;
+        while (true) {
+            while (list.get(lo).compareTo(pivot) == -1) {
+                lo++;
             }
+            while (lo < hi && pivot.compareTo(list.get(hi)) == -1) {
+                hi--;
+            }
+            if (lo >= hi) {
+                break;
+            }
+            T elem = list.get(lo);
+            list.set(lo, list.get(hi));
+            list.set(hi, elem);
+            lo++;
+            hi--;
         }
-        quicksort(list, s, pivInd - 1);
-        quicksort(list, pivInd + 1, e);
+        final int piv = lo;
+        list.set(e, list.get(piv));
+        list.set(piv, pivot);
+        quicksort(list, s, piv - 1);
+        quicksort(list, piv + 1, e);
         return list;
     }
 
