@@ -5,10 +5,6 @@ import jcr.Sorting;
 import jcr.SortingUtils.SortingType;
 import jcr.SortingUtils;
 
-/**
- * Created by Jacob on 12/14/2016.
- * Main class with test cases, no particular functionality
- */
 public class Main {
 
     public static void main(String[] args) {

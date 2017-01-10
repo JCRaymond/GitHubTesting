@@ -3,10 +3,6 @@ package jcr;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Created by quatern10n on 12/20/16.
- * class containing a bunch of useful utilities for sorting
- */
 public class SortingUtils {
 
     private SortingUtils(){}
@@ -84,8 +80,8 @@ public class SortingUtils {
      * @param <T>  the type of the objects in list
      * @return the list with the two values swapped (modifies original list)
      */
-    static <T extends Comparable<T>> ArrayList<T> swapif(ArrayList<T> list, int p1, int p2) {
-        if (list.get(p1).compareTo(list.get(p2)) == 1) {
+    static <T extends Comparable<T>> ArrayList<T> swapif(ArrayList<T> list, int p1, int p2, SortingOrder so) {
+        if (list.get(p1).compareTo(list.get(p2)) == -so.getValue()) {
             swap(list, p1, p2);
         }
         return list;
@@ -100,8 +96,8 @@ public class SortingUtils {
      * @param <T>  the type of the objects in list
      * @return the list with the two values swapped (modifies original list)
      */
-    static <T extends Comparable<T>> T[] swapif(T[] list, int p1, int p2) {
-        if (list[p1].compareTo(list[p2]) == 1) {
+    static <T extends Comparable<T>> T[] swapif(T[] list, int p1, int p2, SortingOrder so) {
+        if (list[p1].compareTo(list[p2]) == -so.getValue()) {
             swap(list, p1, p2);
         }
         return list;
@@ -111,17 +107,18 @@ public class SortingUtils {
      * Converts the ArrayList into a heap (makes list follow the heap rule)
      *
      * @param list the ArrayList to make into a heap
+     * @param so an enum value dictating whether to heapify in ascending or descending order
      * @param <T>  the types of Objects in list
      * @return list as a heap (modifies original list)
      */
-    public static <T extends Comparable<T>> ArrayList<T> heapify(ArrayList<T> list){
+    public static <T extends Comparable<T>> ArrayList<T> heapify(ArrayList<T> list, SortingOrder so){
         for (int i=1; i<list.size(); i++){
             int c = i+1;
             int p = c/2;
             T elem = list.get(c-1);
             while(p > 0){
                 T parent = list.get(p-1);
-                if (elem.compareTo(parent) == 1){
+                if (elem.compareTo(parent) == -so.getValue()){
                     list.set(c-1, parent);
                     c = p;
                     p = c/2;
@@ -136,6 +133,46 @@ public class SortingUtils {
     }
 
     /**
+     * Converts the ArrayList into a heap (makes list follow the heap rule)
+     *
+     * @param list the ArrayList to make into a heap
+     * @param <T>  the types of Objects in list
+     * @return list as a heap (modifies original list)
+     */
+    public static <T extends Comparable<T>> ArrayList<T> heapify(ArrayList<T> list){
+        return heapify(list, SortingOrder.ASCENDING);
+    }
+
+    /**
+     * Converts the Array into a heap (makes list follow the heap rule)
+     *
+     * @param list the Array to make into a heap
+     * @param so an enum value dictating whether to heapify in ascending or descending order
+     * @param <T>  the types of Objects in list
+     * @return list as a heap (modifies original list)
+     */
+    public static <T extends Comparable<T>> T[] heapify(T[] list, SortingOrder so) {
+        for (int i=1; i<list.length; i++){
+            int c = i+1;
+            int p = c/2;
+            T elem = list[c-1];
+            while(p > 0){
+                T parent = list[p-1];
+                if (elem.compareTo(parent) == -so.getValue()){
+                    list[c-1] = parent;
+                    c = p;
+                    p = c/2;
+                }
+                else {
+                    break;
+                }
+            }
+            list[c-1] = elem;
+        }
+        return list;
+    }
+
+    /**
      * Converts the Array into a heap (makes list follow the heap rule)
      *
      * @param list the Array to make into a heap
@@ -143,7 +180,7 @@ public class SortingUtils {
      * @return list as a heap (modifies original list)
      */
     public static <T extends Comparable<T>> T[] heapify(T[] list) {
-        return heapify(new ArrayList<>(Arrays.asList(list))).toArray(list);
+        return heapify(list, SortingOrder.ASCENDING);
     }
 
     //endregion
